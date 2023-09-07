@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Customer Management Page</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+      integrity="sha512-jGR1T3dQerLCSm/IGEGbndPwzszJBlKQ5Br9vuB0Pw2iyxOy+7AK+lJcCC8eaXyz/9du+bkCy4HXxByhxkHf+w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js
+"></script>
+    <link
+      href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css
+"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h3 class="text-center p-5 font-bold text-2xl">Customer Entry Form</h3>
+    <form
+      id="myForm"
+      name="myForm"
+      method="POST"
+      enctype="multipart/form-data"
+      class="p-5"
+    >
+      <div class="mb-3">
+        <label
+          for="lastname"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Last Name</label
+        >
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="firstname"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >First Name</label
+        >
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="your@email.com"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="city" class="block mb-2 text-sm font-medium text-gray-900"
+          >City</label
+        >
+        <input
+          type="text"
+          id="city"
+          name="city"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="country"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Select your country</label
+        >
+        <select
+          id="country"
+          name="country"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
+          <option>United States</option>
+          <option>Canada</option>
+          <option>Japan</option>
+          <option>United Kingdom</option>
+          <option>France</option>
+          <option>Germany</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label
+          class="block mb-2 text-sm font-medium text-gray-900"
+          for="attachment"
+          >Upload file</label
+        >
+        <input
+          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none p-2.5"
+          aria-describedby="attachment_help"
+          name="attachment"
+          type="file"
+          id="attachment"
+          accept="image/*"
+          required
+        />
+
+        <div class="mt-1 text-sm text-gray-500" id="attachment_help">
+          A profile picture is useful to confirm your are logged into your
+          account
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        id="btn_submit"
+        class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 hover:bg-blue-800"
+      >
+        Register new account
+      </button>
+    </form>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-5">
+      <table
+        id="customersTable"
+        class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Name</th>
+            <th scope="col" class="px-6 py-3">Email</th>
+            <th scope="col" class="px-6 py-3">City</th>
+            <th scope="col" class="px-6 py-3">Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr
+            v-for="(item, index) in customers"
+            :key="index"
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+          >
+            <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              <div class="flex items-center">
+                <div class="mr-5">
+                  <img class="w-10 h-10 rounded-full" :src="item.path" alt="Jese image" />
+                </div>
+                <div>{{ item.firstname }} {{ item.lastname }}</div>
+              </div>
+            </th>
+            <td class="px-6 py-4">
+              <RouterLink :to="`/customer-info?email=${item.email}`">{{ item.email }}</RouterLink>
+            </td>
+            <td class="px-6 py-4">{{ item.city }}</td>
+            <td class="px-6 py-4">{{ item.country }}</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(window).load(function (e) {
+          console.log("Page Loaded...");
+          fetchCustomers();
+        });
+
+        $("#myForm").on("submit", function (event) {
+          console.log("Handler for `submit` called.");
+          event.preventDefault();
+
+          Swal.fire({
+            title: "Are you sure you to register this Customer?",
+            showCancelButton: true,
+            confirmButtonText: "Save"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              console.log("HERE");
+              $.ajax({
+                url: "ajaxupload.php",
+                type: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function () {
+                  //$("#preview").fadeOut();
+                  // $("#err").fadeOut();
+                  // $("btn_submit")
+                  $(':input[type="submit"]').prop("disabled", true);
+                  $(':input[type="submit"]').html("Processing...");
+                  $(':input[type="submit"]').addClass(
+                    "cursor-not-allowed bg-gray-500 hover:bg-gray-500"
+                  );
+                  $(':input[type="submit"]').removeClass(
+                    "bg-blue-700 hover:bg-blue-800"
+                  );
+                },
+                success: function (data) {
+                  const response = JSON.parse(data);
+                  if (response.success) {
+                    Swal.fire("Added", "Successfully saved", "success");
+                  } else {
+                    Swal.fire("Error", response.errors, "error");
+                  }
+
+                  $(':input[type="submit"]').prop("disabled", false);
+                  $(':input[type="submit"]').html("Register new account");
+                  $(':input[type="submit"]').removeClass(
+                    "cursor-not-allowed bg-gray-500 hover:bg-gray-500"
+                  );
+                  $(':input[type="submit"]').addClass(
+                    "bg-blue-700 hover:bg-blue-800"
+                  );
+                  fetchCustomers();
+                },
+                error: function (e) {
+                  $(':input[type="submit"]').prop("disabled", false);
+                  $(':input[type="submit"]').html("Register new account");
+                  $(':input[type="submit"]').removeClass(
+                    "cursor-not-allowed bg-gray-500 hover:bg-gray-500"
+                  );
+                  $(':input[type="submit"]').addClass(
+                    "bg-blue-700 hover:bg-blue-800"
+                  );
+                }
+              });
+            }
+          });
+        });
+
+        function fetchCustomers() {
+          $.ajax({
+            url: "fetchCustomers.php",
+            type: "GET",
+            success: function (data) {
+              const response = JSON.parse(data);
+        
+              var customers = "";
+
+              // ITERATING THROUGH OBJECTS
+              $.each(response.data, function (key, value) {
+                // console.log(key, value);
+                //CONSTRUCTION OF ROWS HAVING
+                // DATA FROM JSON OBJECT
+                customers += `<tr class="bg-white border-b ">`;
+                customers += `<td class="p-3">${value.firstname} ${value.lastname} </td>`;
+                customers += `<td><a class="hover:text-blue-700" href="customer.php?email=${value.email}"> ${value.email}</a> </td>`;
+                customers += `<td>${value.city} </td>`;
+                customers += `<td>${value.country} </td>`;
+                customers += "</tr>";
+              });
+              $("#customersTable tbody").html(customers);
+            },
+            error: function (e) {
+              console.log("ERROR: ", e);
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
